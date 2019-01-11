@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<!--
+Wyllemanruben@hotmail.com
+23/12/2018
+-->
+
+<html>
+<head>
+<script src="mimic/mimic.js" language="javascript"></script>
+</head>
+<body>
+<h3>Weather Report Wylleman Ruben</h3>
+<p>using the mimic xml-rpc javascript API</p>
+<p id="weatherReportParagraph"></p>
+<script language="javascript">
+var weatherLocation;
+var weatherCoord;
+var weatherdegrees;
+var weatherwinddir;
+var weatherwindspeed;
+
+function xmlrequest(method){
+var request = new XmlRpcRequest("http://localhost:9000/RPC2",method);
+var response = request.send();
+return  response.parseXML();
+}
+var method = "get_weather_station_location";
+weatherLocation = xmlrequest(method);
+method = "get_weather_station_coordinates";
+weatherCoord = xmlrequest(method);
+method = "get_temperature";
+weatherdegrees = xmlrequest(method);
+method = "get_wind_direction";
+weatherwinddir = xmlrequest(method);
+method = "get_wind_speed";
+weatherwindspeed = xmlrequest(method);
+
+var weatherReport="";
+weatherReport += "<ul>";
+weatherReport += "<li>"+ weatherLocation +"</li>";
+weatherReport += "<li>"+ weatherCoord +"</li>";
+weatherReport += "<li>"+ weatherdegrees +"</li>";
+weatherReport += "<li>"+ weatherwinddir +"</li>";
+weatherReport += "<li>"+ weatherwindspeed +"</li>";
+weatherReport += "</ul>" ;
+
+document.getElementById("weatherReportParagraph").innerHTML=weatherReport;
+</script>
+</body>
+</html>
